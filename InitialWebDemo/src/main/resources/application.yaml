@@ -1,7 +1,7 @@
 spring:
   mvc:
     view:
-      prefix: /accountmanagement
+      prefix: /
       suffix: .html
 server:
   port: 9091
