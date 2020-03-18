@@ -1,21 +1,25 @@
 package com.boot.ms.InitialDemo;
 
-import java.net.Authenticator.RequestorType;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class GreetingRestController {
+
+	//@Value("${greetingDateFormat:h:mm a}")
+	
+	@Value("${greetingDateFormat:\"h:mm a\"}")
+	private String dateFormat;
 
 	@Autowired
 	GreetingRepo repo;
@@ -27,7 +31,8 @@ public class GreetingRestController {
 
 	@RequestMapping(path = "/greet/{id}/{name}")
 	public String getDbGreeting(@PathVariable Integer id, @PathVariable String name) {
-		return repo.getOne(id).getSaying() + ", " + name;
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+		return repo.getOne(id).getSaying() + ", " + name + " [ " + sdf.format(new Date()) + " ] ";
 	}
 
 	@RequestMapping(path = "/greeting", method = RequestMethod.GET)
