@@ -1,15 +1,17 @@
 package com.boot.ms.InitialWebDemo;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class GreetingWebController {
 
 	@GetMapping("/webgreet")
-	public String defViewname(ModelAndView mv) {
-		mv.addObject("greeting","Hello Corona");
+	public String defViewname(Model mv) {
+		mv.addAttribute("greeting","Hello Corona @"+ new Date());
 		return "index";
 	}
 }
